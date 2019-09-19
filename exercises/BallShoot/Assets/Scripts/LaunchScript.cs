@@ -9,15 +9,16 @@ public class LaunchScript : MonoBehaviour
     float chargeEnergy = 0;
     public float chargeRate = 10;
 
-    // Start is called before the first frame update
+    /* Start is called before the first frame update
     void Start()
     {
 
-    }
+    } */
 
     // Update is called once per frame
     void Update()
     {
+        //If the spacebar is pressed but not released yet 
         if (Input.GetKey(KeyCode.Space))
         {
             //deltaTime = how much time has passed after the first function call 
@@ -27,6 +28,7 @@ public class LaunchScript : MonoBehaviour
         //When the spacebar is released
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            //useGravity - controls whether gravity affects this rigidbody 
             rigidBody.useGravity = true;
             rigidBody.AddForce(transform.forward * 1000);
         }
