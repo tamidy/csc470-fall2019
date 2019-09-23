@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileSpeed : MonoBehaviour
 {
-    public 
+    float speed = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,7 @@ public class ProjectileSpeed : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Whatever GameObject has the script will move forward at a speed
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 }

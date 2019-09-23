@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 183251840}
   - component: {fileID: 183251842}
   - component: {fileID: 183251841}
+  - component: {fileID: 183251843}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -182,6 +183,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &183251843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183251839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7515f098a5e698348874d63d1137b084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeObj: {fileID: 1780116460}
+  gameLabelText: {fileID: 1340361025}
 --- !u!4 &336247277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 15624329f7dd6cd4aa8fa64c801f2abe,
@@ -345,25 +360,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &916605996 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: fd88a63ab9db3544985b45359d4bc6a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1530485111}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &916605997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916605996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7515f098a5e698348874d63d1137b084, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  treeObj: {fileID: 1780116460}
 --- !u!4 &916605998 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: fd88a63ab9db3544985b45359d4bc6a4,
@@ -381,6 +377,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -453,6 +450,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &963194229
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1020582220
 PrefabInstance:
   m_ObjectHideFlags: 0
