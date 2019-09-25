@@ -11,6 +11,7 @@ public class PlaneScript : MonoBehaviour
     //FIXME: count and win text 
     private Rigidbody rb;
     public float speed;
+    float rotateSpeed = 90;
     public Text scoreText;
     public Text winAlert;
     private int score;
@@ -31,9 +32,10 @@ public class PlaneScript : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        //(x, y, z)
-        Vector3 move = new Vector3(moveHorizontal, 0, moveVertical);
-        rb.AddForce(move * speed);
+        //Rotate on y-axis and move forward
+        //FIXME: the "front" of my object is not the "front of the plane"
+        transform.Rotate(0, rotateSpeed * Time.deltaTime * moveHorizontal, 0);
+        transform.position += transform.forward * speed * Time.deltaTime * moveVertical;
     }
 
     void SetScoreText()
