@@ -22,9 +22,7 @@ public class CatScript : MonoBehaviour
     void Update()
     {
         //gameObject is the cat 
-        /* How to compute a vector towards something
-        */
-
+        //How to compute a vector towards something
         Vector3 vecToTree = treeObj.transform.position - gameObject.transform.position;
         vecToTree = vecToTree.normalized; //makes it small, but maintains direction 
         transform.position = transform.position + vecToTree * speed * Time.deltaTime;
