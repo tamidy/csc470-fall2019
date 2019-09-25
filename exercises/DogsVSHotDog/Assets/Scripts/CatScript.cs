@@ -23,10 +23,11 @@ public class CatScript : MonoBehaviour
     {
         //gameObject is the cat 
         /* How to compute a vector towards something
-        Vector3  vecToTree = treeObj.transform.position - gameObject.transform.position;
-        vecToTree = vecToTree.normalized;
-        transform.position = transform.position + vecToTree * speed * Time.deltaTime;
         */
+
+        Vector3 vecToTree = treeObj.transform.position - gameObject.transform.position;
+        vecToTree = vecToTree.normalized; //makes it small, but maintains direction 
+        transform.position = transform.position + vecToTree * speed * Time.deltaTime;
 
         //Only if the tree is not destroyed
         if (treeObj != null)
@@ -37,7 +38,7 @@ public class CatScript : MonoBehaviour
         {
             gameObject.transform.LookAt(Camera.main.transform, Vector3.up);
         }
-        transform.position = transform.position + transform.forward * speed * Time.deltaTime;
+        transform.position = transform.position + vecToTree * speed * Time.deltaTime;
     }
 
     //If two things overlap, then this function gets called 
