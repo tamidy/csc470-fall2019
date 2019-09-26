@@ -8,7 +8,6 @@ public class PlaneScript : MonoBehaviour
     /* No physics, no forward key, just transform.forward by itself, floating in space, 
      * left and right keys for rotations*/
 
-    //FIXME: count and win text 
     private Rigidbody rb;
     public float speed;
     float rotateSpeed = 90;
@@ -54,6 +53,7 @@ public class PlaneScript : MonoBehaviour
         //Each Ring must be a trigger 
         //Each Ring must have a tag that is the same as that in the quotations
         //To create a tag, their must be a prefab 
+        //NOTE: Create first prefab, then copy and paste 
         if (other.gameObject.CompareTag("Ring"))
         {
             other.gameObject.SetActive(false);
