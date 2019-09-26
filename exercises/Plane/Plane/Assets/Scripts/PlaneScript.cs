@@ -13,7 +13,10 @@ public class PlaneScript : MonoBehaviour
     float rotateSpeed = 90;
     public Text scoreText;
     public Text winAlert;
+    public Text countDownAlert;
+    public Text BigCoinAlert;
     private int score;
+    float countDown = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,8 @@ public class PlaneScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         score = 0;
         winAlert.text = "";
+        countDownAlert.text = "";
+        BigCoinAlert.text = "";
         SetScoreText();
     }
 
@@ -35,6 +40,12 @@ public class PlaneScript : MonoBehaviour
         //FIXME: the "front" of my object is not the "front of the plane"
         transform.Rotate(0, rotateSpeed * Time.deltaTime * moveHorizontal, 0);
         transform.position += transform.forward * speed * Time.deltaTime * moveVertical;
+
+        countDown -= Time.deltaTime; 
+        if (countDown <= 0)
+        {
+            countDownAlert.text = "Hurry up!";
+        }
     }
 
     void SetScoreText()
@@ -58,6 +69,14 @@ public class PlaneScript : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score += 1;
+            SetScoreText();
+        }
+        else if (other.gameObject.CompareTag("BigCoin"))
+        {
+            other.gameObject.SetActive(false);
+            score += 5;
+            //FIXME: plus sign not showing up
+            BigCoinAlert.text = "Big Coin, Big Points! +5";
             SetScoreText();
         }
     }

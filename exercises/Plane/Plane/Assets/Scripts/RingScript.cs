@@ -8,6 +8,6 @@ public class RingScript : MonoBehaviour
     //Rotating the rings
     void Update()
     {
-        transform.Rotate(new Vector3(0, 0, 45) * Time.deltaTime);
+        transform.Rotate(new Vector3(30, 0, 0) * Time.deltaTime);
     }
 }
