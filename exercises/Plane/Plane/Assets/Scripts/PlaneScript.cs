@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class PlaneScript : MonoBehaviour
 {
     /* No physics, no forward key, just transform.forward by itself, floating in space, 
-     * left and right keys for rotations*/
+     * left and right keys for rotations.
+    */
 
     private Rigidbody rb;
     public float speed;
@@ -17,6 +18,8 @@ public class PlaneScript : MonoBehaviour
     public Text BigCoinAlert;
     private int score;
     float countDown = 10;
+    public float chargeRate = 5;
+    float charge = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,7 @@ public class PlaneScript : MonoBehaviour
 
         //Rotate on y-axis and move forward
         //FIXME: the "front" of my object is not the "front of the plane"
+        //I didn't make the main camera a child of the plane because of that
         transform.Rotate(0, rotateSpeed * Time.deltaTime * moveHorizontal, 0);
         transform.position += transform.forward * speed * Time.deltaTime * moveVertical;
 
@@ -46,9 +50,21 @@ public class PlaneScript : MonoBehaviour
         {
             countDownAlert.text = "Hurry up!";
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            charge += chargeRate * Time.deltaTime;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(transform.position*charge);
+        }
+
+        //Finding another game object(s) ***doesn't do anything 
+        //GameObject gameObj = GameObject.Find("Rings/CHAH-COIN/default");
     }
 
-    void SetScoreText()
+    public void SetScoreText()
     {
         scoreText.text = "Score: " + score.ToString();
         if (score>=10)
@@ -61,6 +77,10 @@ public class PlaneScript : MonoBehaviour
     //Built-in, called when a game object collides with another 
     private void OnTriggerEnter(Collider other)
     {
+        //Finding distance between two vectors and normalizing it, ***doesn't do anything 
+        //Vector3 direction = transform.position - other.gameObject.transform.position;
+        //direction.Normalize();
+        
         //Each Ring must be a trigger 
         //Each Ring must have a tag that is the same as that in the quotations
         //To create a tag, their must be a prefab 
@@ -74,9 +94,8 @@ public class PlaneScript : MonoBehaviour
         else if (other.gameObject.CompareTag("BigCoin"))
         {
             other.gameObject.SetActive(false);
-            score += 5;
-            //FIXME: plus sign not showing up
-            BigCoinAlert.text = "Big Coin, Big Points! +5";
+            score += Random.Range(2,5); //or Random.value()
+            BigCoinAlert.text = "Big Coin, Big Points!";
             SetScoreText();
         }
     }
