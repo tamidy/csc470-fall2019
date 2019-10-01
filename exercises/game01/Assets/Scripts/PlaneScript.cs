@@ -20,6 +20,7 @@ public class PlaneScript : MonoBehaviour
     float countDown = 10;
     public float chargeRate = 5;
     float charge = 0;
+    int randScoreAdder;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,12 @@ public class PlaneScript : MonoBehaviour
         countDownAlert.text = "";
         BigCoinAlert.text = "";
         SetScoreText();
+        randScoreAdder = Random.Range(2, 5);
+
+        //Getting the camera in a good spot to view the plane and the gameplay 
+        Vector3 camPos = transform.position - transform.forward * 8 + Vector3.up * 5;
+        Camera.main.transform.position = camPos;
+        Camera.main.transform.LookAt(transform.position + transform.forward*5);
     }
 
     // Update is called once per frame
@@ -40,7 +47,6 @@ public class PlaneScript : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         //Rotate on y-axis and move forward
-        //FIXME: the "front" of my object is not the "front of the plane"
         //I didn't make the main camera a child of the plane because of that
         transform.Rotate(0, rotateSpeed * Time.deltaTime * moveHorizontal, 0);
         transform.position += transform.forward * speed * Time.deltaTime * moveVertical;
@@ -67,7 +73,7 @@ public class PlaneScript : MonoBehaviour
     public void SetScoreText()
     {
         scoreText.text = "Score: " + score.ToString();
-        if (score>=10)
+        if (score>=(9+randScoreAdder))
         {
             //Must add the .text for it to be correct 
             winAlert.text = "You're rich now!";
@@ -94,7 +100,7 @@ public class PlaneScript : MonoBehaviour
         else if (other.gameObject.CompareTag("BigCoin"))
         {
             other.gameObject.SetActive(false);
-            score += Random.Range(2,5); //or Random.value()
+            score += randScoreAdder; //or Random.value()
             BigCoinAlert.text = "Big Coin, Big Points!";
             SetScoreText();
         }
