@@ -32,9 +32,9 @@ public class CellScript : MonoBehaviour {
         }
 
         if (this.alive) {
-            renderer.material.color = Color.magenta;
+            renderer.material.color = Color.black;
         } else {
-            renderer.material.color = Color.yellow;
+            renderer.material.color = Color.grey;
         }
     }
 

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour {
-
+    
     public GameObject cellPrefab;
     int gridWidth = 10;
     int gridHeight = 10;
@@ -14,7 +15,13 @@ public class GameManagerScript : MonoBehaviour {
     float generationTimer;
     int time = 0;
     bool simulate = false;
-    int aliveCounter = 0;
+    public int aliveCounter = 0;
+    public Text alertText;
+
+    public int tresCounter = 0;
+    public GameObject treasurePrefab;
+    public int maxX = 0; //x position of highest cell 
+    public int maxY = 0; //y position of highest cell
 
     // Start is called before the first frame update
     void Start() {
@@ -53,6 +60,7 @@ public class GameManagerScript : MonoBehaviour {
             }
         }
         generationTimer = generationRate;
+        alertText.text = "Step onto the white and press toggle.";
     }
 
     // Update is called once per frame
@@ -61,10 +69,12 @@ public class GameManagerScript : MonoBehaviour {
         if (generationTimer < 0 && simulate) {
             //Generate next state
             generate();
+            //findTreasure();
 
             //Reset timer 
             generationTimer = generationRate;
         }
+        findTreasure();
     }
 
     void generate() {
@@ -78,8 +88,6 @@ public class GameManagerScript : MonoBehaviour {
 
                 //A new cell appears on top of the current cell if it's alive 
                 if (grid[x,y].alive) {
-                    //aliveCounter++;
-
                     Vector3 newPos = new Vector3(grid[x,y].x * (cellDimension + cellSpacing), aliveCounter * (cellDimension + cellSpacing), grid[x, y].y * (cellDimension + cellSpacing));
                     GameObject newCellObj = Instantiate(cellPrefab, newPos, Quaternion.identity);
                     CellScript newCS = newCellObj.AddComponent<CellScript>();
@@ -90,27 +98,30 @@ public class GameManagerScript : MonoBehaviour {
                     newCellObj.transform.position = newPos;
                     newCellObj.transform.localScale = new Vector3(cellDimension, cellDimension, cellDimension);
                     grid[x, y] = newCS;
-                }
+
+                    maxX = grid[x, y].x;
+                    maxY = grid[x, y].y;
+                }                             
 
                 //Rules of the Game of Life 
 
                 //1) Any live cell with fewer than two live neighbors dies, as if caused by underpopulation.
-                if (grid[x,y].alive && liveNeighbors.Count < 2) {
+                if (grid[x, y].alive && liveNeighbors.Count < 2) {
                     grid[x, y].nextAlive = false;
                 }
 
                 //2) Any live cell with 2 or 3 live neighbors lives on to the next generation.
-                else if (grid[x,y].alive && (liveNeighbors.Count == 2 || liveNeighbors.Count == 3)) {
+                else if (grid[x, y].alive && (liveNeighbors.Count == 2 || liveNeighbors.Count == 3)) {
                     grid[x, y].nextAlive = true;
                 }
 
                 //3) Any live cell with more than 3 live neighbors dies, as if by overpopulation.
-                else if (grid[x,y].alive && liveNeighbors.Count > 3) {
+                else if (grid[x, y].alive && liveNeighbors.Count > 3) {
                     grid[x, y].nextAlive = false;
                 }
 
                 //4) Any dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.
-                else if (!grid[x,y].alive && liveNeighbors.Count == 3) {
+                else if (!grid[x, y].alive && liveNeighbors.Count == 3) {
                     grid[x, y].nextAlive = true;
                 }
             }
@@ -142,5 +153,18 @@ public class GameManagerScript : MonoBehaviour {
     //Called by the UI toggle's event system 
     public void toggleSimulate (bool value) {
         simulate = value;
+    }
+
+    //Game begins when the game of life stops 
+    void findTreasure() {
+        alertText.text = "Climb through life to find the treasure!";
+
+        if (simulate == true) {
+            Vector3 posTreasure = new Vector3(maxX * (cellDimension + cellSpacing), (aliveCounter + 1) * (cellDimension + cellSpacing), maxY * (cellDimension + cellSpacing));
+            GameObject obj = Instantiate(treasurePrefab, posTreasure, Quaternion.identity);
+            TreasureScript tres = obj.AddComponent<TreasureScript>();
+            obj.transform.position = posTreasure;
+            tresCounter++;
+        }
     }
 }
