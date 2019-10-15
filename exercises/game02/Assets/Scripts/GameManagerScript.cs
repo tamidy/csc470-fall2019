@@ -164,14 +164,12 @@ public class GameManagerScript : MonoBehaviour {
 
     //Game begins when the game of life stops 
     void findTreasure() {
-        alertText.text = "Climb through life to find the treasure!";
+        alertText.text = "Climb through life to find the treasures!";
 
-        if (simulate == true) {
-            Vector3 posTreasure = new Vector3(maxX * (cellDimension + cellSpacing), (aliveCounter + 1) * (cellDimension + cellSpacing), maxY * (cellDimension + cellSpacing));
-            GameObject obj = Instantiate(treasurePrefab, posTreasure, Quaternion.identity);
-            TreasureScript tres = obj.AddComponent<TreasureScript>();
-            obj.transform.position = posTreasure;
-            tresCounter++;
-        }
+        Vector3 posTreasure = new Vector3(maxX * (cellDimension + cellSpacing), (aliveCounter + 1) * (cellDimension + cellSpacing), maxY * (cellDimension + cellSpacing));
+        GameObject obj = Instantiate(treasurePrefab, posTreasure, Quaternion.identity);
+        TreasureScript tres = obj.AddComponent<TreasureScript>();
+        obj.transform.position = posTreasure;
+        tresCounter++;
     }
 }
