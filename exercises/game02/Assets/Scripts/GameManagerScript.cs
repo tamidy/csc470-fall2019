@@ -65,22 +65,24 @@ public class GameManagerScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        int c = 0;
         generationTimer -= Time.deltaTime; 
         if (generationTimer < 0 && simulate) {
             //Generate next state
-            generate();
-            //findTreasure();
-
+            c = generate();
+            if (c>0) {
+                findTreasure();
+            }
             //Reset timer 
             generationTimer = generationRate;
         }
-        findTreasure();
     }
 
-    void generate() {
+    int generate() {
         //How many times the simulation has generated a new state
         time++;
         aliveCounter++;
+        int numAliveNow = 0;
 
         for (int x = 0; x < gridWidth; x++) {
             for (int y = 0; y < gridHeight; y++) {
@@ -133,8 +135,13 @@ public class GameManagerScript : MonoBehaviour {
         for (int x = 0; x < gridWidth; x++) {
             for (int y = 0; y < gridHeight; y++) {
                 grid[x, y].alive = grid[x, y].nextAlive;
+                if (grid[x, y].alive) {
+                    numAliveNow++;
+                }
             }
         }
+
+        return numAliveNow;
     }
 
     List<CellScript> gatherLiveNeighbors(int x, int y) {
