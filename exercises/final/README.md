@@ -21,11 +21,19 @@ Target: Getting all 7 pets done, getting their state machines to work (consideri
 High Bar: In addition to meeting the target, the particle effect could take place whenever the pet reaches a certain state, rather than only when the user interacts with it. The user can call their pet’s name and it will come to them. Instead of a single room, the setting can be an entire house, including a kitchen, living room, bedroom, and backyard.
 
 Timeline: 
+
 11/18 - establish color scheme, format the UI, code state machine, build environments, naming the pet 
+
 11/21 - particle effects, store, inventory 
+
 11/25 - building the title screen, adding music, level-up feature 
+
 11/28 - consider critiques and apply them to the game, get caught up if needed 
+
 12/2 - animations, camera movement 
+
 12/5 - saving the game, updating the title screen 
+
 12/9 - build web, final testing 
+
 12/12 - due date 
