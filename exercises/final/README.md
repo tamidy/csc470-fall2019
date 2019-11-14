@@ -1,4 +1,4 @@
-#Animal Allies
+Animal Allies
 
 I am going to create a game that involves taking care of a pet companion by feeding, cradling, playing with, ignoring, and petting it. The user will be able to choose from these actions through buttons on the user interface. The user will have a choice of what kind of pet they want (rabbit, dog, cat, bird, fish, hamster, or lizard). This idea is implementing a basic AI using a state machine. The pet will have different reactions to these gestures, such as hunger, happiness, sadness, sleepiness, and boredom, which will be represented as meters. There will also be a private timer in the code keeping track of the amount of time has passed since the last time the user fed it, which it will respond to with hunger, sadness, sleepiness, and boredom. 
 
