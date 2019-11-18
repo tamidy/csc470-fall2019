@@ -1,6 +1,6 @@
 Animal Allies
 
-I am going to create a game that involves taking care of a pet companion by feeding, cradling, playing with, ignoring, and petting it. The user will be able to choose from these actions through buttons on the user interface. The user will have a choice of what kind of pet they want (rabbit, dog, cat, bird, fish, hamster, or lizard). This idea is implementing a basic AI using a state machine. The pet will have different reactions to these gestures, such as hunger, happiness, sadness, sleepiness, and boredom, which will be represented as meters. There will also be a private timer in the code keeping track of the amount of time has passed since the last time the user fed it, which it will respond to with hunger, sadness, sleepiness, and boredom. 
+I am going to create a game that involves taking care of a pet companion by feeding, cradling, playing with, ignoring, and petting it. The user will be able to choose from these actions through buttons on the user interface. The user will have a choice of what kind of pet they want (rabbit, dog, cat, bird, fish, hamster, or lizard). This idea is implementing a basic AI using a state machine. The pet will have different reactions to these gestures, such as hunger, happiness, sadness, sleepiness, and boredom, which will be represented as meters. There will also be a private timer in the code keeping track of the amount of time has passed since the last time the user fed it, which it will respond to with hunger, sadness, sleepiness, and boredom. Sleepiness and boredom can be improved by using a berry that the user can buy from the store.
 
 When using the state machine, the pet may have a mixture of reactions to an action, so I'll have to assign appropriate reactions to the user's actions using mathematical implementations and considering the mix of emotions the pet is feeling at any given moment. For example, the pet might get more sad when its more sleepy. The user will be able to name their pet once they choose their type of pet on the home screen.
 
@@ -24,7 +24,7 @@ Timeline:
 
 11/18 - establish color scheme, format the UI, code state machine, build environments, naming the pet 
 
-11/21 - particle effects, store, inventory 
+11/21 - particle effects, store, inventory, berries (update state machine)
 
 11/25 - building the title screen, adding music, level-up feature 
 
