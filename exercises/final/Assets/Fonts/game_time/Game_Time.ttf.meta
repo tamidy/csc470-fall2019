@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ba89a1ea294d90646a8cde3304b2ff87
+guid: 8c43e552988a0ca40855fa7dd58d1f64
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Playtimes
+  fontName: Game_Time
   fontNames:
-  - Playtimes
+  - Game_Time
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
