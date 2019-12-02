@@ -309,7 +309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417163338
@@ -715,7 +715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 5, y: -30}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &641148163
@@ -745,7 +745,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2862,8 +2862,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.7, y: -11.475}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: 3, y: -11.475}
+  m_SizeDelta: {x: 110, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1565477127
 MonoBehaviour:
@@ -3305,9 +3305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3895488f6dcaa044195b01145c4b870b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  petObject: {fileID: 2124212236}
+  groundObject: {fileID: 1676608406}
   foodPrefab: {fileID: 2421497437752252185, guid: 42c2eb2a7d1ce1949a3bdf57647a698b,
     type: 3}
-  petObject: {fileID: 2124212236}
   gm: {fileID: 0}
   petName: 
   nameText: {fileID: 1012628967}
@@ -3334,6 +3335,7 @@ MonoBehaviour:
   sadnessMeterFG: {fileID: 1303526366}
   sleepinessMeterFG: {fileID: 277957102}
   boredomMeterFG: {fileID: 799308044}
+  userDirection: {x: 0, y: 0, z: 1}
 --- !u!4 &2124212238
 Transform:
   m_ObjectHideFlags: 0

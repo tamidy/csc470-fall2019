@@ -6,9 +6,11 @@ using UnityEngine.EventSystems;
 
 public class PetScript : MonoBehaviour {
 
+    public GameObject petObject;  //Getting the pet as an object 
+    public GameObject groundObject; //Getting the ground as an object 
+
     //FIXME: food at random places on screen 
     public GameObject foodPrefab; //Food variable for when the player feeds the pet
-    public GameObject petObject;  //Getting the pet as an object 
     bool feeding = false; //Boolean to determine if the player is feeding the pet or not 
 
     //FIXME: pet name 
@@ -26,7 +28,6 @@ public class PetScript : MonoBehaviour {
     public int hungerInt = 0;
     private float timerInt = 0;
 
-    //FIXME: status text 
     //Quotes from the pet 
     public GameObject statusBox;
     public Text statusAlert;
@@ -52,20 +53,20 @@ public class PetScript : MonoBehaviour {
     public Image sleepinessMeterFG;
     public Image boredomMeterFG;
 
-    //FIXME: pet's movement
+    //FIXME: pet's movement (facing the direction it's going, animations)
     //Variables for the pet's movement
-    //public static int movespeed = 5; //******
-    //public Vector3 userDirection = Vector3.forward; //******
-    private float timeOfMovement = 2.0f;
-    private float waitTimeMovement = 2.0f;
+    public static int movespeed = 5;
+    public Vector3 userDirection = Vector3.forward;
+    private float timeOfMovement = 3.0f;
+    private float waitTimeMovement = 3.0f;
     private bool hasArrived = false;
 
     // Start is called before the first frame update
     void Start() {
 
-        /*
-        //FIXME: pet name 
+        /*FIXME: pet name 
         gm = GameObject.Find("GameManagerObject").GetComponent<GameManager>();
+        //Debug.Log(gm.test); FIXME: delete later
         petName = gm.namePet; //Saving the pet's name from the GameManager (the title screen)
         nameText.text = petName; //Saving the pet's name into the UI Text object 
         */
@@ -111,8 +112,8 @@ public class PetScript : MonoBehaviour {
 
         //Status alert update and keep the state at its highest value 
         if (hunger>=100) {
-            statusAlert.text = "FEED ME!";
-            speak(); //FIXME: status text 
+            statusAlert.text = "FEED ME!\n(Touch Screen to Continue)";
+            speak();
             hunger = 100;
         }
 
@@ -138,23 +139,20 @@ public class PetScript : MonoBehaviour {
 
         //FIXME: food at random places on screen 
         if (feeding) {
-
             //Food shows up at a random spot on the plane
             Vector3 pos = transform.position * Random.Range(-20.0f, 20.0f) + Vector3.up * 1.65f + transform.forward * Random.Range(-20.0f, 20.0f);
             GameObject food = Instantiate(foodPrefab, pos, transform.rotation);
             feeding = false;
         }
 
-        /*
         //FIXME: pet's movement
         //Making the pet move on its own
-        //transform.Translate(userDirection * movespeed * Time.deltaTime); //******
         if (!hasArrived) {
             movingPet();
-        } */
+        } 
 
         //Camera Movement, moves with the pet 
-        Vector3 camPos = transform.position + transform.forward * 30 + Vector3.up * 15;
+        Vector3 camPos = transform.position + transform.forward * 55 + Vector3.up * 20;
         Camera.main.transform.position = camPos + transform.right * -15;
         Camera.main.transform.LookAt(transform);
 
@@ -167,8 +165,8 @@ public class PetScript : MonoBehaviour {
 
         //Status alert update and keep the state at its highest and lowest value 
         if (happiness>=100) {
-            statusAlert.text = "I love you!";
-            speak(); //FIXME: status text 
+            statusAlert.text = "I love you!\n(Touch Screen to Continue)";
+            speak();
             happiness = 100;
             sadness = 0;
         }
@@ -202,8 +200,8 @@ public class PetScript : MonoBehaviour {
         }
         //Status alert update and keep the state at its highest and lowest value 
         if (sadness>=100) {
-            statusAlert.text = "BOOHOO! I'M SAD!";
-            speak(); //FIXME: status text 
+            statusAlert.text = "BOOHOO! I'M SAD!\n(Touch Screen to Continue)";
+            speak();
             sadness = 100;
             happiness = 0;
         }
@@ -218,8 +216,8 @@ public class PetScript : MonoBehaviour {
         }
         //Status alert update and keep the state at its highest value 
         if (sleepiness>=100) {
-            statusAlert.text = "Zzzzz...";
-            speak(); //FIXME: status text 
+            statusAlert.text = "Zzzzz...\n(Touch Screen to Continue)";
+            speak();
             sleepiness = 100;
         }
     }
@@ -241,19 +239,19 @@ public class PetScript : MonoBehaviour {
         }
         //Status alert update and keep the state at its highest value 
         if (boredom>=100) {
-            statusAlert.text = "Play With Me!";
-            speak(); //FIXME: status text 
+            statusAlert.text = "Play With Me!\n(Touch Screen to Continue)";
+            speak();
             boredom = 100;
         }
     }
 
-    /*
     //FIXME: pet's movement
     //Function and Coroutine to move the pet randomly throughout the plane
     void movingPet() {
-        float randX = Random.Range(-.45f, .45f);
-        float randZ = Random.Range(-.45f, .45f);
-        StartCoroutine(MoveToPoint(new Vector3(randX, -1.504f, randZ)));
+        hasArrived = true;
+        float randX = Random.Range(groundObject.transform.position.x - 10, groundObject.transform.position.x + 10);
+        float randZ = Random.Range(groundObject.transform.position.z - 10, groundObject.transform.position.z + 10);
+        StartCoroutine(MoveToPoint(new Vector3(randX, petObject.transform.position.y, randZ)));
     }
 
     private IEnumerator MoveToPoint(Vector3 targetPosition) {
@@ -262,42 +260,35 @@ public class PetScript : MonoBehaviour {
 
         while (timer < timeOfMovement) {
             timer += Time.deltaTime;
-            float t = timer / timeOfMovement;
-            t = t * t * t * (t * (6f * t - 15f) + 10f);
-            transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            transform.position = Vector3.Lerp(startPos, targetPosition, timer);
             yield return null;
         }
-        yield return new WaitForSeconds(waitTimeMovement);
         hasArrived = false;
-    } */
+        yield return new WaitForSeconds(waitTimeMovement);
+    }
 
-
-    //FIXME: status text 
     //Function and Coroutine to updating the status box and displaying it when and where appropriate 
     void speak() {
 
         //Compute the screen position 2 units above the unit and place the talkBox
-        Vector3 pos = petObject.transform.position + Vector3.up * 2;
+        Vector3 pos = petObject.transform.position + Vector3.up * 20;
         pos = Camera.main.WorldToScreenPoint(pos);
         statusBox.transform.position = pos;
 
-        StartCoroutine(displayTalkBoxMessage(statusAlert.text + "\tTouch Screen to Continue"));
+        StartCoroutine(displayTalkBoxMessage(statusAlert.text));
     }
 
     private IEnumerator displayTalkBoxMessage(string t) {
-
-        float timePerLine = 2;
         statusBox.SetActive(true);
 
         //Wait for the mouse to be pressed on the screen
         while (!Input.GetMouseButtonDown(0)) {
             //Tell the coroutine system that we are done for this update cycle.
-            yield return new WaitForSeconds(timePerLine);
+            yield return null;
         }
 
         //If we get here, it means that the mouse was just pressed
         //Tell the coroutine system that we are done for this update cycle
-        yield return null;
         statusBox.SetActive(false);
     } 
 }
