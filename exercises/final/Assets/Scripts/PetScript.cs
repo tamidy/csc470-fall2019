@@ -9,7 +9,6 @@ public class PetScript : MonoBehaviour {
     public GameObject petObject;  //Getting the pet as an object 
     public GameObject groundObject; //Getting the ground as an object 
 
-    //FIXME: food at random places on screen 
     public GameObject foodPrefab; //Food variable for when the player feeds the pet
     bool feeding = false; //Boolean to determine if the player is feeding the pet or not 
 
@@ -53,13 +52,14 @@ public class PetScript : MonoBehaviour {
     public Image sleepinessMeterFG;
     public Image boredomMeterFG;
 
-    //FIXME: pet's movement (facing the direction it's going, animations)
+    //FIXME: pet's movement (animations)
     //Variables for the pet's movement
     public static int movespeed = 5;
     public Vector3 userDirection = Vector3.forward;
     private float timeOfMovement = 3.0f;
     private float waitTimeMovement = 3.0f;
     private bool hasArrived = false;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start() {
@@ -99,6 +99,10 @@ public class PetScript : MonoBehaviour {
         cradle.onClick.AddListener(UpdateSleepiness);
         ignore.onClick.AddListener(UpdateSadness);
         playWith.onClick.AddListener(UpdateHappiness);
+
+        //Camera movement
+        Vector3 camPos = transform.position + transform.forward * 55 + Vector3.up * 20;
+        Camera.main.transform.position = camPos + transform.right * -15;
     }
 
     // Update is called once per frame
@@ -137,7 +141,6 @@ public class PetScript : MonoBehaviour {
         boredomText.text = "Boredom: " + boredom.ToString();
         hungerText.text = "Hunger: " + hungerInt.ToString();
 
-        //FIXME: food at random places on screen 
         if (feeding) {
             //Food shows up at a random spot on the plane
             Vector3 pos = transform.position * Random.Range(-20.0f, 20.0f) + Vector3.up * 1.65f + transform.forward * Random.Range(-20.0f, 20.0f);
@@ -151,9 +154,7 @@ public class PetScript : MonoBehaviour {
             movingPet();
         } 
 
-        //Camera Movement, moves with the pet 
-        Vector3 camPos = transform.position + transform.forward * 55 + Vector3.up * 20;
-        Camera.main.transform.position = camPos + transform.right * -15;
+        //Camera Movement, moves with the pet, but doesn't rotate with it 
         Camera.main.transform.LookAt(transform);
 
     } //end of Update()
@@ -249,6 +250,7 @@ public class PetScript : MonoBehaviour {
     //Function and Coroutine to move the pet randomly throughout the plane
     void movingPet() {
         hasArrived = true;
+        //animator.SetBool("Walking", false); //FIXME animation 
         float randX = Random.Range(groundObject.transform.position.x - 10, groundObject.transform.position.x + 10);
         float randZ = Random.Range(groundObject.transform.position.z - 10, groundObject.transform.position.z + 10);
         StartCoroutine(MoveToPoint(new Vector3(randX, petObject.transform.position.y, randZ)));
@@ -260,10 +262,20 @@ public class PetScript : MonoBehaviour {
 
         while (timer < timeOfMovement) {
             timer += Time.deltaTime;
+
+            //Changing position 
             transform.position = Vector3.Lerp(startPos, targetPosition, timer);
+
+            //Rotation FIXME
+            Vector3 vecToDest = (targetPosition - transform.position).normalized;
+            float step = 10 * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, vecToDest, step, 1);
+            transform.rotation = Quaternion.LookRotation(targetPosition);
+
             yield return null;
         }
         hasArrived = false;
+        //animator.SetBool("Walking", true);
         yield return new WaitForSeconds(waitTimeMovement);
     }
 

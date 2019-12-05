@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     //public string test = "1"; FIXME: delete later
 
     void Start() {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.gameObject);
     }
 
     void Update() {
