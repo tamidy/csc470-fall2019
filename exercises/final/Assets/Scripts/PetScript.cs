@@ -30,6 +30,7 @@ public class PetScript : MonoBehaviour {
     //Quotes from the pet 
     public GameObject statusBox;
     public Text statusAlert;
+    public Text continueText;
 
     //Texts to display the pet's current state 
     public Text happinessText;
@@ -80,6 +81,7 @@ public class PetScript : MonoBehaviour {
 
         //Initializing the texts 
         statusAlert.text = "";
+        continueText.text = "(Touch Screen to Continue)";
         happinessText.text = "Happiness: ";
         sadnessText.text = "Sadness: ";
         sleepinessText.text = "Sleepiness: ";
@@ -115,10 +117,10 @@ public class PetScript : MonoBehaviour {
         hungerInt = Mathf.RoundToInt(hunger); //Increasing hunger as time goes on 
 
         //Status alert update and keep the state at its highest value 
-        if (hunger>=100) {
-            statusAlert.text = "FEED ME!\n(Touch Screen to Continue)";
+        if (hunger<=0) {
+            statusAlert.text = "FEED ME!";
             speak();
-            hunger = 100;
+            hunger = 0;
         }
 
         //Updating the meters
@@ -163,21 +165,19 @@ public class PetScript : MonoBehaviour {
     void UpdateHappiness() {
         happiness += 1;
         sadness -= 1;
+        sleepiness += 2;
+        boredom += 2;
 
         //Status alert update and keep the state at its highest and lowest value 
-        if (happiness>=100) {
-            statusAlert.text = "I love you!\n(Touch Screen to Continue)";
-            speak();
-            happiness = 100;
-            sadness = 0;
-        }
+        checkRanges();
     }
 
     void resetHunger() {
 
-        //When the pet is more sad than hungry, then the sadness increases as well 
+        //When the pet is more sad than hungry, then the sadness increases and happiness decreases as well 
         if (hunger < sadness) {
             sadness += 1;
+            happiness -= 1;
         }
         hunger = 100;
         feeding = true;
@@ -200,12 +200,7 @@ public class PetScript : MonoBehaviour {
             sleepiness -= 1;
         }
         //Status alert update and keep the state at its highest and lowest value 
-        if (sadness>=100) {
-            statusAlert.text = "BOOHOO! I'M SAD!\n(Touch Screen to Continue)";
-            speak();
-            sadness = 100;
-            happiness = 0;
-        }
+        checkRanges();
     }
 
     void UpdateSleepiness() {
@@ -216,11 +211,7 @@ public class PetScript : MonoBehaviour {
             sadness -= 1;
         }
         //Status alert update and keep the state at its highest value 
-        if (sleepiness>=100) {
-            statusAlert.text = "Zzzzz...\n(Touch Screen to Continue)";
-            speak();
-            sleepiness = 100;
-        }
+        checkRanges();
     }
 
     void UpdateBoredom() {
@@ -239,9 +230,41 @@ public class PetScript : MonoBehaviour {
             sadness -= 1;
         }
         //Status alert update and keep the state at its highest value 
-        if (boredom>=100) {
-            statusAlert.text = "Play With Me!\n(Touch Screen to Continue)";
+        checkRanges();
+    }
+
+    //Function to check the range of emotions, keep it 0-100
+    void checkRanges() {
+        if (happiness <= 0) {
+            happiness = 0;
+        } else if (happiness >= 100) {
+            happiness = 100;
+            statusAlert.text = "I love you!";
             speak();
+        }
+
+        if (sadness <= 0) {
+            happiness = 0;
+        } else if (sadness >= 100) {
+            sadness = 100;
+            statusAlert.text = "BOOHOO! I'M SAD!";
+            speak();
+        }
+
+        if (sleepiness <= 0) {
+            sleepiness = 0;
+            statusAlert.text = "Zzzzz...";
+            speak();
+        } else if (sleepiness >= 100) {
+            sleepiness = 100;
+        }
+
+        if (boredom <= 0) {
+            boredom = 0;
+            statusAlert.text = "Play With Me!";
+            speak();
+        }
+        else if (boredom >= 100) {
             boredom = 100;
         }
     }
@@ -291,6 +314,8 @@ public class PetScript : MonoBehaviour {
     }
 
     private IEnumerator displayTalkBoxMessage(string t) {
+
+        //Showing the status box
         statusBox.SetActive(true);
 
         //Wait for the mouse to be pressed on the screen
@@ -302,6 +327,7 @@ public class PetScript : MonoBehaviour {
         //If we get here, it means that the mouse was just pressed
         //Tell the coroutine system that we are done for this update cycle
         statusBox.SetActive(false);
+        continueText.GetComponent<Text>().enabled = false;
     } 
 }
 
