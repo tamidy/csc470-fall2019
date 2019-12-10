@@ -117,11 +117,7 @@ public class PetScript : MonoBehaviour {
         hungerInt = Mathf.RoundToInt(hunger); //Increasing hunger as time goes on 
 
         //Status alert update and keep the state at its highest value 
-        if (hunger<=0) {
-            statusAlert.text = "FEED ME!";
-            speak();
-            hunger = 0;
-        }
+        checkRanges();
 
         //Updating the meters
         hunger = Mathf.Clamp(hunger, 0, 100);
@@ -206,7 +202,11 @@ public class PetScript : MonoBehaviour {
     void UpdateSleepiness() {
         sleepiness -= 1;
 
-        //When the pet is more sad than sleepy, then the sadness increases as well 
+        //When the pet is less sleepy than happy, then the happiness decreases
+        if (sleepiness < happiness) {
+            happiness -= 1;
+        }
+        //When the pet is more sad than sleepy, then the sadness decreases as well 
         if (sleepiness < sadness) {
             sadness -= 1;
         }
@@ -217,6 +217,11 @@ public class PetScript : MonoBehaviour {
     void UpdateBoredom() {
         boredom -= 1;
 
+
+        //When the pet is less bored than happy, then the happiness decreases
+        if (boredom < happiness) {
+            happiness -= 1;
+        }
         //When the pet is more hungry than bored, then the hunger increases as well 
         if (boredom < hunger) {
             hunger -= 1;
@@ -235,6 +240,12 @@ public class PetScript : MonoBehaviour {
 
     //Function to check the range of emotions, keep it 0-100
     void checkRanges() {
+        if (hunger <= 0) {
+            statusAlert.text = "FEED ME!";
+            speak();
+            hunger = 0;
+        }
+
         if (happiness <= 0) {
             happiness = 0;
         } else if (happiness >= 100) {
@@ -263,8 +274,7 @@ public class PetScript : MonoBehaviour {
             boredom = 0;
             statusAlert.text = "Play With Me!";
             speak();
-        }
-        else if (boredom >= 100) {
+        } else if (boredom >= 100) {
             boredom = 100;
         }
     }
