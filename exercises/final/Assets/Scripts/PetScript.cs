@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/* References: 
+ * https://answers.unity.com/questions/1427984/how-to-make-object-move-from-one-random-point-to-a.html
+*/
+
 public class PetScript : MonoBehaviour {
 
     public GameObject petObject;  //Getting the pet as an object 
@@ -299,7 +303,7 @@ public class PetScript : MonoBehaviour {
             //Changing position 
             transform.position = Vector3.Lerp(startPos, targetPosition, timer);
 
-            //Rotation FIXME
+            //Rotation
             Vector3 vecToDest = (targetPosition - transform.position).normalized;
             float step = 10 * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, vecToDest, step, 1);
@@ -340,7 +344,3 @@ public class PetScript : MonoBehaviour {
         continueText.GetComponent<Text>().enabled = false;
     } 
 }
-
-/* References: 
- * https://answers.unity.com/questions/1427984/how-to-make-object-move-from-one-random-point-to-a.html
-*/
