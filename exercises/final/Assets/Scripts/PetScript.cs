@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 /* References: 
  * https://answers.unity.com/questions/1427984/how-to-make-object-move-from-one-random-point-to-a.html
@@ -65,8 +66,16 @@ public class PetScript : MonoBehaviour {
     private bool level1 = true;
     private bool level2 = false;
     private bool level3 = false;
+    private int level1Counter = 0;
+    private int level2Counter = 0;
+    private int level3Counter = 0;
+    private bool levelupbool = false;
+    public GameObject levelupText;
+    private bool win = false;
+    public GameObject trophy1;
+    public GameObject trophy2;
+    public GameObject trophy3;
 
-    // Start is called before the first frame update
     void Start() {
 
         //Initializing the status variables 
@@ -104,7 +113,6 @@ public class PetScript : MonoBehaviour {
         Camera.main.transform.position = camPos + transform.right * -15;
     }
 
-    // Update is called once per frame
     void Update() {
         timer += Time.deltaTime; //Updating the timer 
         hunger -= Time.deltaTime; //Gets more hungry as time goes on 
@@ -245,9 +253,10 @@ public class PetScript : MonoBehaviour {
         if (happiness <= 0) {
             happiness = 0;
         } else if (happiness >= 100) {
-            happiness = 100;
+            happiness = 50;
             statusAlert.text = "I love you!";
             speak();
+            checkLevel();
         }
 
         if (sadness <= 0) {
@@ -333,4 +342,48 @@ public class PetScript : MonoBehaviour {
         statusBox.SetActive(false);
         continueText.GetComponent<Text>().enabled = false;
     } 
+
+    void checkLevel() {
+        if (level1) {
+            level1Counter++;
+            if (level1Counter>=3) {
+                levelupbool = true;
+                StartCoroutine(levelUp());
+                levelupText.SetActive(false);
+                level1 = false;
+                level2 = true;
+                trophy1.SetActive(true);
+            }
+        }
+        if (level2) {
+            level2Counter++;
+            if (level2Counter >= 3) {
+                levelupbool = true;
+                StartCoroutine(levelUp());
+                levelupText.SetActive(false);
+                level2 = false;
+                level3 = true;
+                trophy2.SetActive(true);
+            }
+        }
+        if (level3) {
+            level3Counter++;
+            if (level1Counter >= 3) {
+                levelupbool = true;
+                StartCoroutine(levelUp());
+                levelupText.SetActive(false);
+                level3 = false;
+                win = true;
+                trophy3.SetActive(true);
+            }
+        }
+        if (win) {
+            SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
+        }
+    }
+
+    private IEnumerator levelUp() {
+        levelupText.SetActive(true);
+        yield return new WaitForSeconds(5);
+    }
 }

@@ -17,4 +17,8 @@ public class GameManager : MonoBehaviour {
     public void SelectAnimal(string sceneName) {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
+
+    public void resetButton(string startScreen) {
+        SceneManager.LoadScene(startScreen, LoadSceneMode.Single);
+    }
 }
