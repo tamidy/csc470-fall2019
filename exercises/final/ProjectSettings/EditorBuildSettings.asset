@@ -15,11 +15,23 @@ EditorBuildSettings:
     path: Assets/Scenes/Rabbit.unity
     guid: 9bf21d6f2d36a4640ab75c9893bba243
   - enabled: 1
+    path: Assets/Scenes/Hamster.unity
+    guid: 4e356a60fb5de0a4e9df3ce36819e71f
+  - enabled: 1
     path: Assets/Scenes/Dog.unity
     guid: 2102cdcf9f6dc5740adf0487a7b2917b
   - enabled: 1
     path: Assets/Scenes/Cat.unity
     guid: 1d9069ef4b81fcb45994761647c5da71
+  - enabled: 1
+    path: Assets/Scenes/Lizard.unity
+    guid: 5b938dceb2eac0f478fabc96bc757d04
+  - enabled: 1
+    path: Assets/Scenes/Fish.unity
+    guid: 43c55b0120901a84eb1f53f8fe4e09e9
+  - enabled: 1
+    path: Assets/Scenes/Bird.unity
+    guid: 3fb4f3f02940b604bb0fb8a4096c7a00
   - enabled: 1
     path: Assets/Scenes/WinScene.unity
     guid: 54e0454134b872444b82556213a1e7ea
