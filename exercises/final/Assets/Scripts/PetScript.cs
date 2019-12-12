@@ -10,16 +10,12 @@ using UnityEngine.EventSystems;
 
 public class PetScript : MonoBehaviour {
 
+    public GameManager gm; //GameManager variable
     public GameObject petObject;  //Getting the pet as an object 
     public GameObject groundObject; //Getting the ground as an object 
 
     public GameObject foodPrefab; //Food variable for when the player feeds the pet
     bool feeding = false; //Boolean to determine if the player is feeding the pet or not 
-
-    //FIXME: pet name 
-    public GameManager gm; //GameManager variable
-    public string petName; //Variable for the pet's name 
-    public Text nameText; //UI object for the pet's name
 
     //Emotional levels in the form of integers 
     public float happiness = 0;
@@ -57,7 +53,6 @@ public class PetScript : MonoBehaviour {
     public Image sleepinessMeterFG;
     public Image boredomMeterFG;
 
-    //FIXME: pet's movement (animations)
     //Variables for the pet's movement
     public static int movespeed = 5;
     public Vector3 userDirection = Vector3.forward;
@@ -66,15 +61,13 @@ public class PetScript : MonoBehaviour {
     private bool hasArrived = false;
     public Animator animator;
 
+    //Levels 
+    private bool level1 = true;
+    private bool level2 = false;
+    private bool level3 = false;
+
     // Start is called before the first frame update
     void Start() {
-
-        /*FIXME: pet name 
-        gm = GameObject.Find("GameManagerObject").GetComponent<GameManager>();
-        //Debug.Log(gm.test); FIXME: delete later
-        petName = gm.namePet; //Saving the pet's name from the GameManager (the title screen)
-        nameText.text = petName; //Saving the pet's name into the UI Text object 
-        */
 
         //Initializing the status variables 
         happiness = 50;
@@ -150,7 +143,6 @@ public class PetScript : MonoBehaviour {
             feeding = false;
         }
 
-        //FIXME: pet's movement
         //Making the pet move on its own
         if (!hasArrived) {
             movingPet();
@@ -283,11 +275,10 @@ public class PetScript : MonoBehaviour {
         }
     }
 
-    //FIXME: pet's movement
     //Function and Coroutine to move the pet randomly throughout the plane
     void movingPet() {
         hasArrived = true;
-        //animator.SetBool("Walking", false); //FIXME animation 
+        //animator.SetBool("Walking", false); 
         float randX = Random.Range(groundObject.transform.position.x - 10, groundObject.transform.position.x + 10);
         float randZ = Random.Range(groundObject.transform.position.z - 10, groundObject.transform.position.z + 10);
         StartCoroutine(MoveToPoint(new Vector3(randX, petObject.transform.position.y, randZ)));
@@ -308,11 +299,10 @@ public class PetScript : MonoBehaviour {
             float step = 10 * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, vecToDest, step, 1);
             transform.rotation = Quaternion.LookRotation(targetPosition);
-
             yield return null;
         }
         hasArrived = false;
-        //animator.SetBool("Walking", true);
+        animator.SetBool("Walking", true);
         yield return new WaitForSeconds(waitTimeMovement);
     }
 
