@@ -252,18 +252,20 @@ public class PetScript : MonoBehaviour {
         }
 
         if (happiness <= 0) {
-            happiness = 1;
+            happiness = 0;
         } else if (happiness >= 100) {
             happiness = 50;
+            sadness = 50;
             statusAlert.text = "I love you!";
             speak();
             checkLevel();
         }
 
         if (sadness <= 0) {
-            sadness = 1;
+            sadness = 0;
         } else if (sadness >= 100) {
             sadness = 50;
+            happiness = 50;
             statusAlert.text = "BOOHOO! I'M SAD!";
             sadnessCounter++;
             if (sadnessCounter>=3) {
@@ -273,26 +275,26 @@ public class PetScript : MonoBehaviour {
         }
 
         if (sleepiness <= 0) {
-            sleepiness = 1;
+            sleepiness = 0;
             statusAlert.text = "Zzzzz...";
             speak();
         } else if (sleepiness >= 100) {
-            sleepiness = 99;
+            sleepiness = 100;
         }
 
         if (boredom <= 0) {
-            boredom = 1;
+            boredom = 0;
             statusAlert.text = "Play With Me!";
             speak();
         } else if (boredom >= 100) {
-            boredom = 99;
+            boredom = 100;
         }
     }
 
     //Function and Coroutine to move the pet randomly throughout the plane
     void movingPet() {
         hasArrived = true;
-        //animator.SetBool("Walking", false); 
+        animator.SetBool("Walking", false); 
         float randX = Random.Range(groundObject.transform.position.x - 10, groundObject.transform.position.x + 10);
         float randZ = Random.Range(groundObject.transform.position.z - 10, groundObject.transform.position.z + 10);
         StartCoroutine(MoveToPoint(new Vector3(randX, petObject.transform.position.y, randZ)));
@@ -358,7 +360,6 @@ public class PetScript : MonoBehaviour {
                 level1 = false;
                 level2 = true;
                 trophy1.SetActive(true);
-                restartLevel();
             }
         }
         if (level2) {
@@ -391,11 +392,5 @@ public class PetScript : MonoBehaviour {
     private IEnumerator levelUp() {
         levelupText.SetActive(true);
         yield return new WaitForSeconds(5);
-    }
-
-    //
-    void restartLevel() {
-        //happiness = Random
-
     }
 }
