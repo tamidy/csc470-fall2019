@@ -75,6 +75,7 @@ public class PetScript : MonoBehaviour {
     public GameObject trophy1;
     public GameObject trophy2;
     public GameObject trophy3;
+    private int sadnessCounter = 0;
 
     void Start() {
 
@@ -251,7 +252,7 @@ public class PetScript : MonoBehaviour {
         }
 
         if (happiness <= 0) {
-            happiness = 0;
+            happiness = 1;
         } else if (happiness >= 100) {
             happiness = 50;
             statusAlert.text = "I love you!";
@@ -260,27 +261,31 @@ public class PetScript : MonoBehaviour {
         }
 
         if (sadness <= 0) {
-            happiness = 0;
+            sadness = 1;
         } else if (sadness >= 100) {
-            sadness = 100;
+            sadness = 50;
             statusAlert.text = "BOOHOO! I'M SAD!";
+            sadnessCounter++;
+            if (sadnessCounter>=3) {
+                SceneManager.LoadScene("LoseScreen", LoadSceneMode.Single);
+            }
             speak();
         }
 
         if (sleepiness <= 0) {
-            sleepiness = 0;
+            sleepiness = 1;
             statusAlert.text = "Zzzzz...";
             speak();
         } else if (sleepiness >= 100) {
-            sleepiness = 100;
+            sleepiness = 99;
         }
 
         if (boredom <= 0) {
-            boredom = 0;
+            boredom = 1;
             statusAlert.text = "Play With Me!";
             speak();
         } else if (boredom >= 100) {
-            boredom = 100;
+            boredom = 99;
         }
     }
 
@@ -353,6 +358,7 @@ public class PetScript : MonoBehaviour {
                 level1 = false;
                 level2 = true;
                 trophy1.SetActive(true);
+                restartLevel();
             }
         }
         if (level2) {
@@ -385,5 +391,11 @@ public class PetScript : MonoBehaviour {
     private IEnumerator levelUp() {
         levelupText.SetActive(true);
         yield return new WaitForSeconds(5);
+    }
+
+    //
+    void restartLevel() {
+        //happiness = Random
+
     }
 }
