@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /* NOTE: No physics, no forward key, just transform.forward by itself, floating in space, left and right keys for rotations.
- * 
- * 
- * 
+ *  
  */
 
 public class PlaneScript : MonoBehaviour {
